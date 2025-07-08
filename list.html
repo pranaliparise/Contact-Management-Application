@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Contact List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background-color: #f5f5f5;
+        }
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        a.button {
+            padding: 8px 16px;
+            background-color: #2ecc71;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .actions a {
+            margin-right: 10px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .edit {
+            background-color: #f39c12;
+        }
+
+        .delete {
+            background-color: #e74c3c;
+        }
+
+        .no-data {
+            text-align: center;
+            font-style: italic;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Contact List</h2>
+<a href="/contacts/add" class="button">+ Add New Contact</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="contact : ${contacts}">
+            <td th:text="${contact.firstName}"></td>
+            <td th:text="${contact.lastName}"></td>
+            <td th:text="${contact.address}"></td>
+            <td th:text="${contact.email}"></td>
+            <td th:text="${contact.phoneNumber}"></td>
+            <td class="actions">
+                <a th:href="@{/contacts/edit/{id}(id=${contact.id})}" class="edit">Edit</a>
+                <a th:href="@{/contacts/delete/{id}(id=${contact.id})}" class="delete" onclick="return confirm('Are you sure you want to delete this contact?')">Delete</a>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(contacts)}">
+            <td colspan="6" class="no-data">No contacts found.</td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
